@@ -29,8 +29,8 @@ exports.createWallet = async (req, res) => {
 exports.getWallets = async (req, res) => {
   try {
     const wallets = await Wallet.find({ 'members.user': req.userId })
-      .populate('owner', 'name email')
-      .populate('members.user', 'name email avatarUrl');
+      .populate('owner', 'fullName email avatar')
+      .populate('members.user', 'fullName email avatar');
     res.json(wallets);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -46,8 +46,8 @@ exports.getWalletById = async (req, res) => {
       _id: req.params.id,
       'members.user': req.userId
     })
-      .populate('owner', 'name email')
-      .populate('members.user', 'name email avatarUrl');
+      .populate('owner', 'fullName email avatar')
+      .populate('members.user', 'fullName email avatar');
 
     if (!wallet) {
       return res.status(404).json({ message: 'Wallet not found or access denied' });
@@ -143,8 +143,8 @@ exports.addMember = async (req, res) => {
     await wallet.save();
 
     const updatedWallet = await Wallet.findById(wallet._id)
-      .populate('owner', 'name email')
-      .populate('members.user', 'name email avatarUrl');
+      .populate('owner', 'fullName email avatar')
+      .populate('members.user', 'fullName email avatar');
 
     res.json(updatedWallet);
   } catch (error) {
