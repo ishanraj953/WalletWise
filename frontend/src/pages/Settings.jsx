@@ -1,21 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
+import { Link, useNavigate } from 'react-router-dom';
 import AppNavbar from '../components/AppNavbar';
 import './Settings.css';
-import { FaWallet, FaBullseye, FaArrowLeft, FaCheck, FaExclamationTriangle, FaTimes } from 'react-icons/fa';
+import { FaWallet, FaBullseye, FaArrowLeft, FaCheck, FaExclamationTriangle, FaTimes, FaTrash } from 'react-icons/fa';
 
 const Settings = () => {
-  const { user, loading, updateProfile } = useAuth();
+  const { user, loading, updateProfile, deleteAccount } = useAuth();
+  const { setTheme } = useTheme();
+  const navigate = useNavigate();
   const lastUserIdRef = useRef(null);
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteConfirmationText, setDeleteConfirmationText] = useState('');
   const [hasChanges, setHasChanges] = useState(false);
   const [formData, setFormData] = useState({
     incomeFrequency: 'Monthly',
     incomeSources: '',
     priorities: 'Saving',
-    riskTolerance: 'Moderate'
+    riskTolerance: 'Moderate',
+    theme: 'light'
   });
 
   /* Removed isEditing state */
@@ -31,7 +38,8 @@ const Settings = () => {
       incomeFrequency: user.incomeFrequency || 'Monthly',
       incomeSources: user.incomeSources || '',
       priorities: user.priorities || 'Saving',
-      riskTolerance: user.riskTolerance || 'Moderate'
+      riskTolerance: user.riskTolerance || 'Moderate',
+      theme: user.theme || 'light'
     };
 
     setFormData(initialData);
@@ -55,7 +63,8 @@ const Settings = () => {
       incomeFrequency: user.incomeFrequency || 'Monthly',
       incomeSources: user.incomeSources || '',
       priorities: user.priorities || 'Saving',
-      riskTolerance: user.riskTolerance || 'Moderate'
+      riskTolerance: user.riskTolerance || 'Moderate',
+      theme: user.theme || 'light'
     });
     setHasChanges(false);
   };
@@ -71,7 +80,8 @@ const Settings = () => {
         incomeFrequency: formData.incomeFrequency,
         incomeSources: formData.incomeSources,
         priorities: formData.priorities,
-        riskTolerance: formData.riskTolerance
+        riskTolerance: formData.riskTolerance,
+        theme: formData.theme
       };
 
       const data = await updateProfile(payload);
@@ -81,8 +91,10 @@ const Settings = () => {
           incomeFrequency: data.user?.incomeFrequency || 'Monthly',
           incomeSources: data.user?.incomeSources || '',
           priorities: data.user?.priorities || 'Saving',
-          riskTolerance: data.user?.riskTolerance || 'Moderate'
+          riskTolerance: data.user?.riskTolerance || 'Moderate',
+          theme: data.user?.theme || 'light'
         });
+        setTheme(data.user?.theme || formData.theme || 'light');
         setStatus({
           type: 'success',
           message: 'Your financial profile has been updated successfully!'
@@ -110,7 +122,45 @@ const Settings = () => {
     incomeFrequency: 'How often you receive income',
     incomeSources: 'e.g., Salary, Freelance, Investments',
     priorities: 'Your primary financial goal',
-    riskTolerance: 'Your comfort level with investment risk'
+    riskTolerance: 'Your comfort level with investment risk',
+    theme: 'Select your preferred app appearance'
+  };
+
+  const resetDeleteDialog = () => {
+    setShowDeleteConfirm(false);
+    setDeleteConfirmationText('');
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user || isDeleting) return;
+    if (deleteConfirmationText.trim() !== 'DELETE') {
+      setStatus({
+        type: 'error',
+        message: 'Please type DELETE exactly to confirm account deletion.'
+      });
+      return;
+    }
+
+    setIsDeleting(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      const response = await deleteAccount();
+      if (response?.success) {
+        resetDeleteDialog();
+        navigate('/signup', { replace: true });
+      } else {
+        setStatus({
+          type: 'error',
+          message: response?.message || 'Failed to delete account. Please try again.'
+        });
+      }
+    } catch (error) {
+      const message = error?.response?.data?.message || 'Failed to delete account. Please try again.';
+      setStatus({ type: 'error', message });
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -249,9 +299,53 @@ const Settings = () => {
                   </select>
                 </div>
               </div>
+
+              {/* Theme Preference */}
+              <div className="form-group">
+                <label htmlFor="theme">
+                  Theme Preference <span className="required">*</span>
+                </label>
+                <p className="field-info">{fieldInfo.theme}</p>
+                <div className="select-wrapper">
+                  <select
+                    id="theme"
+                    name="theme"
+                    value={formData.theme}
+                    onChange={handleChange}
+                  >
+                    <option value="light">Light Mode</option>
+                    <option value="dark">Dark Mode</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </section>
         </form>
+
+        <section className="settings-card danger-zone">
+          <div className="card-header">
+            <div className="card-icon danger">
+              <FaTrash />
+            </div>
+            <div>
+              <h2>Danger Zone</h2>
+              <p>Permanently delete your account and all associated WalletWise data.</p>
+            </div>
+          </div>
+          <p className="danger-note">
+            This action cannot be undone. Your transactions, budgets, savings goals, subscriptions, investments,
+            shared-wallet ownership data, and account profile will be permanently removed.
+          </p>
+          <button
+            type="button"
+            className="btn-danger"
+            onClick={() => setShowDeleteConfirm(true)}
+            disabled={loading || isDeleting || !user}
+          >
+            <FaTrash />
+            Delete My Account Permanently
+          </button>
+        </section>
 
         {/* Static Footer */}
         <div className="settings-footer">
@@ -293,6 +387,43 @@ const Settings = () => {
           </div>
         </div>
       </div>
+
+      {showDeleteConfirm && (
+        <div className="delete-modal-overlay" onClick={resetDeleteDialog}>
+          <div className="delete-modal" onClick={(event) => event.stopPropagation()}>
+            <h3>Delete Account Permanently</h3>
+            <p>
+              Type <strong>DELETE</strong> to confirm. This will erase your account and all associated data permanently.
+            </p>
+            <input
+              type="text"
+              value={deleteConfirmationText}
+              onChange={(event) => setDeleteConfirmationText(event.target.value)}
+              placeholder="Type DELETE"
+              className="delete-input"
+              autoFocus
+            />
+            <div className="delete-modal-actions">
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={resetDeleteDialog}
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn-danger"
+                onClick={handleDeleteAccount}
+                disabled={isDeleting || deleteConfirmationText.trim() !== 'DELETE'}
+              >
+                {isDeleting ? 'Deleting...' : 'Delete Forever'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

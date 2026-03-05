@@ -82,6 +82,14 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const deleteAccount = async () => {
+    const { data } = await api.delete('/auth/account');
+    if (data?.success) {
+      setUser(null);
+    }
+    return data;
+  };
+
   const updateUserLocally = useCallback((updates) => {
     setUser((prev) => (prev ? { ...prev, ...updates } : prev));
   }, []);
@@ -96,6 +104,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         updateProfile,
         logout,
+        deleteAccount,
         refreshSession,
         reloadUser: loadUser,
         updateUserLocally

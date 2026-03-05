@@ -2,6 +2,13 @@ const bcrypt = require('bcryptjs');
 const { z } = require('zod');
 const crypto = require('crypto');
 const User = require('../models/User');
+const Transaction = require('../models/Transactions');
+const Budget = require('../models/Budget');
+const SavingsGoal = require('../models/SavingGoal');
+const Subscription = require('../models/Subscription');
+const Investment = require('../models/Investment');
+const Wallet = require('../models/Wallet');
+const TransactionActivity = require('../models/TransactionActivity');
 const asyncHandler = require("../middleware/asyncHandler");
 const { sendEmail } = require('../utils/mailer');
 const { generateOtp, hashOtp, otpExpiresAt } = require('../utils/otp');
@@ -575,6 +582,53 @@ const updateProfile = asyncHandler(async (req, res) => {
   });
 });
 
+const deleteAccount = asyncHandler(async (req, res) => {
+  const userId = req.userId;
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return res.status(404).json({ success: false, message: 'User not found' });
+  }
+
+  const ownedWallets = await Wallet.find({ owner: userId }).select('_id');
+  const ownedWalletIds = ownedWallets.map((wallet) => wallet._id);
+  let ownedWalletTransactionIds = [];
+
+  if (ownedWalletIds.length > 0) {
+    const ownedWalletTransactions = await Transaction.find({
+      walletId: { $in: ownedWalletIds }
+    }).select('_id');
+    ownedWalletTransactionIds = ownedWalletTransactions.map((tx) => tx._id);
+  }
+
+  const deletionTasks = [
+    Transaction.deleteMany({ userId }),
+    Budget.deleteMany({ userId }),
+    SavingsGoal.deleteMany({ userId }),
+    Subscription.deleteMany({ userId }),
+    Investment.deleteMany({ userId }),
+    TransactionActivity.deleteMany({ userId }),
+    Wallet.updateMany({ 'members.user': userId }, { $pull: { members: { user: userId } } }),
+    Wallet.deleteMany({ owner: userId }),
+    User.deleteOne({ _id: userId })
+  ];
+
+  if (ownedWalletIds.length > 0) {
+    deletionTasks.push(Transaction.deleteMany({ walletId: { $in: ownedWalletIds } }));
+  }
+  if (ownedWalletTransactionIds.length > 0) {
+    deletionTasks.push(TransactionActivity.deleteMany({ transactionId: { $in: ownedWalletTransactionIds } }));
+  }
+
+  await Promise.all(deletionTasks);
+  clearAuthCookies(res);
+
+  return res.json({
+    success: true,
+    message: 'Your account and all associated data have been permanently deleted.'
+  });
+});
+
 const googleCallback = asyncHandler(async (req, res) => {
   const user = req.user;
   if (!user.emailVerified) {
@@ -647,6 +701,7 @@ module.exports = {
   refresh,
   me,
   updateProfile,
+  deleteAccount,
   googleCallback,
   verifyEmail,
   resendEmailOtp,
