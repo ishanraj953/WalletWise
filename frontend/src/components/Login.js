@@ -36,6 +36,7 @@ const Login = () => {
       const data = await login({ email, password });
 
       if (data?.success) {
+        window.sessionStorage.removeItem('walletwise-show-tour-once');
         navigate('/dashboard', { replace: true });
         toast.success('Login successful!', {
           autoClose: 1500,
@@ -155,6 +156,7 @@ const Login = () => {
             className="demo-btn google-btn"
             onClick={() => {
               const apiBase = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+              window.sessionStorage.removeItem('walletwise-show-tour-once');
               window.location.href = `${apiBase}/auth/google`;
             }}
           >

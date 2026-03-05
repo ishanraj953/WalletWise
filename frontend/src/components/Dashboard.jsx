@@ -5,6 +5,7 @@ import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { DashboardSkeleton } from './SkeletonLoader';
 import './dashboard.css';
+import GuidedTour from './GuidedTour';
 import AddExpense from '../pages/AddExpense';
 import AddIncome from '../pages/AddIncome';
 import SetBudget from '../pages/SetBudget';
@@ -74,6 +75,8 @@ const Dashboard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [isTourOpen, setIsTourOpen] = useState(false);
+  const hasPromptedTourRef = useRef(false);
   // const { isDark, toggleTheme } = useTheme(); // CACHE BUST TEMPORARY COMMENT
 
   const userMenuRef = useRef(null);
@@ -374,6 +377,68 @@ const Dashboard = () => {
 
   const handleOpenGoals = () => {
     navigate("/goals", { state: { refetchAt: Date.now() } });
+  };
+
+  const tourSteps = [
+    {
+      target: '[data-tour="dashboard-header"]',
+      title: 'Welcome to WalletWise',
+      content: 'This is your command center for budget, spending, and savings.'
+    },
+    {
+      target: '[data-tour="refresh-btn"]',
+      title: 'Refresh Data',
+      content: 'Use this button to pull the latest transactions and stats instantly.'
+    },
+    {
+      target: '[data-tour="ai-insights-btn"]',
+      title: 'AI Insights',
+      content: 'Open behavior analysis to see trends, warnings, and suggestions.'
+    },
+    {
+      target: '[data-tour="decision-helper-btn"]',
+      title: 'Decision Maker',
+      content: 'Check affordability before purchases with your budget and context.'
+    },
+    {
+      target: '[data-tour="quick-stats"]',
+      title: 'Quick Stats',
+      content: 'Track total balance, monthly spending, savings, and budget status.'
+    },
+    {
+      target: '[data-tour="quick-actions"]',
+      title: 'Quick Actions',
+      content: 'Add income/expense, set budget, and jump to key tools in one click.'
+    },
+    {
+      target: '[data-tour="charts"]',
+      title: 'Charts & Forecasts',
+      content: 'Visualize your pace and category-wise spending patterns.'
+    },
+    {
+      target: '[data-tour="recent-transactions"]',
+      title: 'Recent Activity',
+      content: 'Review your latest transactions and validate entries quickly.'
+    }
+  ];
+
+  useEffect(() => {
+    if (loading || authLoading || !authUser || hasPromptedTourRef.current) return;
+    hasPromptedTourRef.current = true;
+    const shouldShowTour = window.sessionStorage.getItem('walletwise-show-tour-once') === 'true';
+    if (shouldShowTour) {
+      window.sessionStorage.removeItem('walletwise-show-tour-once');
+      setIsTourOpen(true);
+    }
+  }, [loading, authLoading, authUser]);
+
+  const handleTourClose = (completed) => {
+    setIsTourOpen(false);
+    const userId = authUser?.id || authUser?._id;
+    if (completed && userId) {
+      const storageKey = `walletwise-tour-completed-${userId}`;
+      window.localStorage.setItem(storageKey, 'true');
+    }
   };
 
   // ============ CHART CONFIGURATIONS ============
@@ -758,7 +823,7 @@ const Dashboard = () => {
       </header>
 
       {/* Main Content Area */}
-      <div className="dashboard-content">
+      <div className="dashboard-content" data-tour="dashboard-header">
         {/* Dashboard Header with Greeting and Actions */}
         <div className="dashboard-header-area">
           <div className="dashboard-header-left">
@@ -783,6 +848,7 @@ const Dashboard = () => {
             <div className="action-buttons">
               <button
                 className={`refresh-btn ${refreshing ? "refreshing" : ""}`}
+                data-tour="refresh-btn"
                 onClick={fetchDashboardData}
                 disabled={refreshing}
                 aria-busy={refreshing}
@@ -795,13 +861,11 @@ const Dashboard = () => {
               >
                 <FaSync className={refreshing ? "spin" : ""} />
                 <span>{refreshing ? "Refreshing..." : "Refresh Data"}</span>
-                {lastUpdated && !refreshing && (
-                  <span className="last-updated">Updated {lastUpdated}</span>
-                )}
               </button>
 
               <button
                 className="ai-insights-btn"
+                data-tour="ai-insights-btn"
                 onClick={handleAIInsights}
                 title="View AI-powered spending insights"
                 aria-label="AI Insights"
@@ -812,6 +876,7 @@ const Dashboard = () => {
 
               <button
                 className="ai-insights-btn"
+                data-tour="decision-helper-btn"
                 onClick={() => navigate('/decision-helper')}
                 title="AI-powered purchase advisor"
                 aria-label="Decision Helper"
@@ -820,13 +885,26 @@ const Dashboard = () => {
                 <FaMagic className="ai-icon" />
                 <span>Decision Helper</span>
               </button>
+
+              <button
+                className="tour-btn"
+                onClick={() => setIsTourOpen(true)}
+                title="Start guided product tour"
+                aria-label="Start guided product tour"
+              >
+                <FaStar className="ai-icon" />
+                <span>Start Tour</span>
+              </button>
             </div>
+            {lastUpdated && !refreshing && (
+              <p className="actions-refreshed">Refreshed {lastUpdated}</p>
+            )}
           </div>
         </div>
 
         {/* Quick Stats */}
         {refreshing && <div className="stats-overlay">Updating...</div>}
-        <div className={`quick-stats ${refreshing ? "loading" : ""}`}>
+        <div className={`quick-stats ${refreshing ? "loading" : ""}`} data-tour="quick-stats">
           <div className="stat-card">
             <div className="stat-icon blue">
               <FaWallet />
@@ -937,7 +1015,7 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="quick-actions-section">
+        <div className="quick-actions-section" data-tour="quick-actions">
           <h2 className="section-title">Quick Actions</h2>
           <div className="quick-actions-grid">
             <button
@@ -1003,7 +1081,7 @@ const Dashboard = () => {
         </div>
 
         {/* Charts Section with Empty States */}
-        <div className="charts-section">
+        <div className="charts-section" data-tour="charts">
           <div className="chart-container">
             <div className="chart-header">
               <h3>Monthly Pacing & Projection</h3>
@@ -1064,7 +1142,7 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Transactions */}
-        <div className="recent-transactions">
+        <div className="recent-transactions" data-tour="recent-transactions">
           <div className="section-header">
             <div>
               <h3>Recent Transactions</h3>
@@ -1221,6 +1299,12 @@ const Dashboard = () => {
           onSuccess={handleUnlockVaultSuccess}
         />
       )}
+
+      <GuidedTour
+        isOpen={isTourOpen}
+        steps={tourSteps}
+        onClose={handleTourClose}
+      />
     </div>
   );
 };

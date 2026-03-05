@@ -131,6 +131,7 @@ const Signup = () => {
       } else if (data?.success) {
         toast.success("Registration successful! Redirecting...");
         setTimeout(() => {
+          window.sessionStorage.setItem("walletwise-show-tour-once", "true");
           navigate("/dashboard");
         }, 1500);
       } else {
@@ -219,6 +220,7 @@ const Signup = () => {
           onClick={() => {
             const apiBase =
               process.env.REACT_APP_API_URL || "http://localhost:5000";
+            window.sessionStorage.setItem("walletwise-show-tour-once", "true");
             window.location.href = `${apiBase}/auth/google`;
           }}
         >
