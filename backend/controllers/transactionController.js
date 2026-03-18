@@ -124,7 +124,7 @@ const addTransaction = catchAsync(async (req, res, next) => {
 
     // Update balance
     const balanceChange = type === 'income' ? amount : -amount;
-    
+
     if (walletId) {
       // Update shared wallet balance
       const Wallet = require('../models/Wallet');
@@ -152,11 +152,11 @@ const addTransaction = catchAsync(async (req, res, next) => {
     // Gamification Hook
     const gamificationResult = await gamification.recordUserActivity(userId);
     let badgeAwarded = null;
-    
+
     // Check for "First Transaction" badge
     const count = await Transaction.countDocuments({ userId });
     if (count === 1) {
-       badgeAwarded = await gamification.awardBadge(userId, 'FIRST_TRANSACTION');
+      badgeAwarded = await gamification.awardBadge(userId, 'FIRST_TRANSACTION');
     }
 
     return { transaction, gamificationResult, badgeAwarded };

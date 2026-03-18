@@ -7,7 +7,7 @@ const calculatePredictiveFields = (goal) => {
     const now = new Date();
     const targetDate = new Date(goal.targetDate);
     const createdAt = goal.createdAt ? new Date(goal.createdAt) : now;
-    
+
     const timeRemaining = targetDate.getTime() - now.getTime();
     let daysRemaining = Math.max(0, Math.ceil(timeRemaining / (1000 * 3600 * 24)));
 
@@ -27,7 +27,7 @@ const calculatePredictiveFields = (goal) => {
     } else {
         const totalDurationDays = Math.max(1, Math.ceil((targetDate.getTime() - createdAt.getTime()) / (1000 * 3600 * 24)));
         const daysElapsed = Math.max(0, Math.ceil((now.getTime() - createdAt.getTime()) / (1000 * 3600 * 24)));
-        
+
         const expectedAmount = (goal.targetAmount / totalDurationDays) * daysElapsed;
 
         if (goal.currentAmount >= expectedAmount) {

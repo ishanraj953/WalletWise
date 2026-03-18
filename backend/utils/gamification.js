@@ -79,7 +79,7 @@ const recordUserActivity = async (userId) => {
           user.highestStreak = user.currentStreak;
         }
         xpGain += 10; // Daily streak XP
-        
+
         // Check for streak badges
         if (user.currentStreak === 7 && !user.unlockedBadges.includes(BADGES.STREAK_7.id)) {
           user.unlockedBadges.push(BADGES.STREAK_7.id);
@@ -95,7 +95,7 @@ const recordUserActivity = async (userId) => {
     }
 
     user.lastActiveDate = new Date();
-    
+
     if (xpGain > 0) {
       user.totalXP = (user.totalXP || 0) + xpGain;
     }
@@ -103,8 +103,8 @@ const recordUserActivity = async (userId) => {
     // Check level up badge
     const newLevel = calculateLevel(user.totalXP);
     if (newLevel >= 5 && !user.unlockedBadges.includes(BADGES.LEVEL_5.id)) {
-        user.unlockedBadges.push(BADGES.LEVEL_5.id);
-        unlockedBadges.push(BADGES.LEVEL_5);
+      user.unlockedBadges.push(BADGES.LEVEL_5.id);
+      unlockedBadges.push(BADGES.LEVEL_5);
     }
 
     await user.save();
@@ -129,7 +129,7 @@ const awardBadge = async (userId, badgeKey) => {
 
     const newLevel = calculateLevel(user.totalXP);
     if (newLevel >= 5 && !user.unlockedBadges.includes(BADGES.LEVEL_5.id)) {
-        user.unlockedBadges.push(BADGES.LEVEL_5.id);
+      user.unlockedBadges.push(BADGES.LEVEL_5.id);
     }
 
     await user.save();
@@ -141,24 +141,24 @@ const awardBadge = async (userId, badgeKey) => {
 };
 
 const getStatus = async (userId) => {
-    const user = await User.findById(userId);
-    if (!user) return null;
-    
-    const level = calculateLevel(user.totalXP);
-    const nextLevelXP = getNextLevelXP(level);
-    const prevLevelXP = level === 1 ? 0 : getNextLevelXP(level - 1);
-    const progress = Math.max(0, Math.min(100, Math.round(((user.totalXP - prevLevelXP) / (nextLevelXP - prevLevelXP)) * 100)));
+  const user = await User.findById(userId);
+  if (!user) return null;
 
-    return {
-        totalXP: user.totalXP || 0,
-        level,
-        progress,
-        nextLevelXP,
-        currentStreak: user.currentStreak || 0,
-        highestStreak: user.highestStreak || 0,
-        unlockedBadges: user.unlockedBadges || [],
-        allBadges: Object.values(BADGES)
-    };
+  const level = calculateLevel(user.totalXP);
+  const nextLevelXP = getNextLevelXP(level);
+  const prevLevelXP = level === 1 ? 0 : getNextLevelXP(level - 1);
+  const progress = Math.max(0, Math.min(100, Math.round(((user.totalXP - prevLevelXP) / (nextLevelXP - prevLevelXP)) * 100)));
+
+  return {
+    totalXP: user.totalXP || 0,
+    level,
+    progress,
+    nextLevelXP,
+    currentStreak: user.currentStreak || 0,
+    highestStreak: user.highestStreak || 0,
+    unlockedBadges: user.unlockedBadges || [],
+    allBadges: Object.values(BADGES)
+  };
 };
 
 module.exports = {

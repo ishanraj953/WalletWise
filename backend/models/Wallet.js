@@ -45,7 +45,7 @@ const walletSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Ensure owner is always an admin member
-walletSchema.pre('save', function(next) {
+walletSchema.pre('save', function (next) {
   if (this.isNew) {
     const isOwnerInMembers = this.members.some(m => m.user.toString() === this.owner.toString());
     if (!isOwnerInMembers) {

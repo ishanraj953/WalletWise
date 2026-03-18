@@ -21,7 +21,7 @@ const Budget = mongoose.model('Budget', budgetSchema);
 
 const inferCategoryType = (name) => {
   const normalized = String(name || '').toLowerCase();
-  
+
   const mapping = {
     food: ['food', 'grocery', 'groceries', 'dining', 'meal', 'eating'],
     transport: ['transport', 'travel', 'commute', 'fuel', 'uber', 'taxi'],
@@ -31,13 +31,13 @@ const inferCategoryType = (name) => {
     healthcare: ['healthcare', 'health', 'medical'],
     housing: ['housing', 'rent', 'home', 'utility']
   };
-  
+
   for (const [type, keywords] of Object.entries(mapping)) {
     if (keywords.some(keyword => new RegExp(`\\b${keyword}\\b`).test(normalized))) {
       return type;
     }
   }
-  
+
   return 'other';
 };
 

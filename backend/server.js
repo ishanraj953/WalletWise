@@ -46,16 +46,16 @@ const allowedOrigins = Array.from(
     )
 );
 const MONGODB_URI =
-  process.env.MONGODB_URI || (isProd ? null : 'mongodb://localhost:27017/walletwise');
+    process.env.MONGODB_URI || (isProd ? null : 'mongodb://localhost:27017/walletwise');
 
 if (isProd && !FRONTEND_URL) {
-  console.error('❌ Missing FRONTEND_URL in production environment');
-  process.exit(1);
+    console.error('❌ Missing FRONTEND_URL in production environment');
+    process.exit(1);
 }
 
 if (isProd && !MONGODB_URI) {
-  console.error('❌ Missing MONGODB_URI in production environment');
-  process.exit(1);
+    console.error('❌ Missing MONGODB_URI in production environment');
+    process.exit(1);
 }
 
 // Initialize Express app

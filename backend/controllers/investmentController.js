@@ -39,7 +39,7 @@ exports.getPortfolio = async (req, res) => {
   try {
     const userId = req.user.id;
     const investments = await Investment.find({ userId });
-    
+
     // Update with latest mock prices
     let totalPortfolioValue = 0;
     const updatedInvestments = investments.map(inv => {
@@ -47,9 +47,9 @@ exports.getPortfolio = async (req, res) => {
       const currentValue = inv.quantity * latestPrice;
       const totalReturn = currentValue - (inv.quantity * inv.averageBuyPrice);
       const returnPercentage = inv.averageBuyPrice ? (totalReturn / (inv.quantity * inv.averageBuyPrice)) * 100 : 0;
-      
+
       totalPortfolioValue += currentValue;
-      
+
       return {
         ...inv.toObject(),
         currentPrice: latestPrice,
@@ -85,7 +85,7 @@ exports.getMarketData = async (req, res) => {
       // simulate a random daily change between -3% and +3%
       dayChange: +(Math.random() * 6 - 3).toFixed(2)
     }));
-    
+
     res.status(200).json({ success: true, data: market });
   } catch (error) {
     console.error('getMarketData error:', error);

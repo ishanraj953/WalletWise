@@ -545,11 +545,11 @@ const updateProfile = asyncHandler(async (req, res) => {
   //   incomeFrequency, incomeSources, priorities, riskTolerance
   // } = parsed.data;
   const {
-  fullName, phoneNumber, department, year,
-  currency, dateFormat, language, theme,
-  incomeFrequency, incomeSources, priorities, riskTolerance,
-  billRemindersEnabled, reminderDaysBefore
-} = parsed.data;
+    fullName, phoneNumber, department, year,
+    currency, dateFormat, language, theme,
+    incomeFrequency, incomeSources, priorities, riskTolerance,
+    billRemindersEnabled, reminderDaysBefore
+  } = parsed.data;
 
   if (fullName !== undefined) user.fullName = fullName.trim();
   if (phoneNumber !== undefined) user.phoneNumber = phoneNumber.trim();

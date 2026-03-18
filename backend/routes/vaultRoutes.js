@@ -30,16 +30,16 @@ router.get('/status', protect, async (req, res) => {
 router.post('/setup', protect, async (req, res) => {
   try {
     const { salt } = req.body;
-    
+
     if (!salt || typeof salt !== 'string') {
-        return res.status(400).json({ success: false, message: 'Invalid salt provided' });
+      return res.status(400).json({ success: false, message: 'Invalid salt provided' });
     }
 
     const user = await User.findById(req.userId);
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
-    
+
     if (user.vaultEnabled) {
       return res.status(400).json({ success: false, message: 'Vault is already set up.' });
     }

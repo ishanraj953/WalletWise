@@ -32,7 +32,7 @@ const savingsGoalSchema = new mongoose.Schema({
     type: Date,
     required: [true, 'Target date is required'],
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         return value > new Date();
       },
       message: 'Target date must be in the future'
@@ -74,7 +74,7 @@ const savingsGoalSchema = new mongoose.Schema({
 });
 
 // Calculate progress before saving
-savingsGoalSchema.pre('save', function(next) {
+savingsGoalSchema.pre('save', function (next) {
   if (this.targetAmount > 0) {
     this.progress = Math.min(100, (this.currentAmount / this.targetAmount) * 100);
   } else {
