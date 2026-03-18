@@ -207,8 +207,13 @@ body.theme-dark .gamification-container,
 }
 
 @keyframes pulseFire {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.05);
+  }
 }
 
 .streak-text h3 {
@@ -618,11 +623,11 @@ body.theme-dark .boost-box,
     flex-direction: column;
     padding: 2rem 1rem;
   }
-  
+
   .xp-details {
     text-align: center;
   }
-  
+
   .xp-details h3 {
     justify-content: center;
   }

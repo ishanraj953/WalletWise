@@ -36,21 +36,21 @@ export const handleGamificationReward = (gamification) => {
   if (!gamification) return;
 
   if (gamification.xpGained > 0 && gamification.xpGained > 10) {
-      toast.success(`🎉 +${gamification.xpGained} XP Earned!`, { icon: '✨' });
+    toast.success(`🎉 +${gamification.xpGained} XP Earned!`, { icon: '✨' });
   }
 
   if (gamification.levelUp) {
-      triggerConfetti();
-      toast.success(`🏆 Level Up! You are now Level ${gamification.newLevel}!`, { duration: 5000, icon: '🌟' });
+    triggerConfetti();
+    toast.success(`🏆 Level Up! You are now Level ${gamification.newLevel}!`, { duration: 5000, icon: '🌟' });
   }
 
   if (gamification.newBadges && gamification.newBadges.length > 0) {
-      triggerConfetti();
-      gamification.newBadges.forEach(badgeId => {
-          const badgeInfo = BADGES.find(b => b.id === badgeId);
-          if (badgeInfo) {
-              toast.success(`🏅 New Badge Unlocked: ${badgeInfo.name} ${badgeInfo.icon}`, { duration: 5000 });
-          }
-      });
+    triggerConfetti();
+    gamification.newBadges.forEach(badgeId => {
+      const badgeInfo = BADGES.find(b => b.id === badgeId);
+      if (badgeInfo) {
+        toast.success(`🏅 New Badge Unlocked: ${badgeInfo.name} ${badgeInfo.icon}`, { duration: 5000 });
+      }
+    });
   }
 };

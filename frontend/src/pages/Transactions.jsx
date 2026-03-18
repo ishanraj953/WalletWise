@@ -417,7 +417,7 @@ const Transactions = () => {
                       </td>
                       <td>
                         {tx.isRecurring && (
-                          <button 
+                          <button
                             className="ghost-button skip-button"
                             onClick={() => handleSkip(tx._id || tx.id)}
                             title="Skip Next Occurrence"

@@ -74,8 +74,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;        /* stops text character from having extra space */
-  padding: 0;            /* removes any default button padding offsetting it */
+  line-height: 1;
+  /* stops text character from having extra space */
+  padding: 0;
+  /* removes any default button padding offsetting it */
   transform-origin: center center;
   transition: all 0.2s;
 }
@@ -202,8 +204,10 @@ body.theme-dark .close-savings-btn:hover {
 .timeline-btn {
   padding: 10px;
   border-radius: 8px;
-  background: var(--bg-card);        /* was: white */
-  border: 2px solid var(--border-subtle); /* was: #e1e5e9 */
+  background: var(--bg-card);
+  /* was: white */
+  border: 2px solid var(--border-subtle);
+  /* was: #e1e5e9 */
   color: var(--text-muted);
   font-size: 13px;
   cursor: pointer;
@@ -250,7 +254,7 @@ body.theme-dark .close-savings-btn:hover {
 
 /* Summary Card */
 .savings-summary-card {
-  background: var(--bg-app);         
+  background: var(--bg-app);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   padding: 20px;
@@ -261,7 +265,8 @@ body.theme-dark .close-savings-btn:hover {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 16px;
-  color: var(--text-main);;
+  color: var(--text-main);
+  ;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -281,7 +286,7 @@ body.theme-dark .close-savings-btn:hover {
 
 .summary-label {
   font-size: 12px;
-  color:  var(--text-muted);
+  color: var(--text-muted);
   margin-bottom: 4px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -290,7 +295,8 @@ body.theme-dark .close-savings-btn:hover {
 .summary-value {
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-main);;
+  color: var(--text-main);
+  ;
 }
 
 .summary-value.highlight {
@@ -307,7 +313,7 @@ body.theme-dark .close-savings-btn:hover {
 
 .monthly-label {
   font-size: 14px;
-  color:  var(--text-muted);
+  color: var(--text-muted);
   margin-bottom: 8px;
 }
 
@@ -346,13 +352,13 @@ body.theme-dark .close-savings-btn:hover {
 }
 
 .savings-btn-cancel {
-  background: var(--bg-app);          
-  color: var(--text-muted);   
+  background: var(--bg-app);
+  color: var(--text-muted);
   border: 2px solid var(--border-subtle);
 }
 
 .savings-btn-cancel:hover:not(:disabled) {
-   background: var(--bg-card);
+  background: var(--bg-card);
   color: var(--text-main);
 }
 
@@ -438,8 +444,13 @@ body.theme-dark .close-savings-btn:hover {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
@@ -447,6 +458,7 @@ body.theme-dark .close-savings-btn:hover {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -454,18 +466,42 @@ body.theme-dark .close-savings-btn:hover {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes timer {
-  from { width: 100%; }
-  to { width: 0; }
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0;
+  }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 /* Responsive Design */
@@ -475,28 +511,28 @@ body.theme-dark .close-savings-btn:hover {
     margin: 10px;
     max-height: 90vh;
   }
-  
+
   .savings-modal-header {
     padding: 20px;
   }
-  
+
   .header-left h2 {
     font-size: 20px;
   }
-  
+
   .savings-form {
     padding: 20px;
   }
-  
+
   .priority-grid,
   .timeline-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .summary-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .savings-form-actions {
     flex-direction: column;
   }

@@ -52,14 +52,14 @@ const ForgotPassword = () => {
           autoClose: 2000,
           pauseOnHover: false
         });
-        
+
         // Navigate to reset password page with email in query params
         setTimeout(() => {
           navigate(`/reset-password?email=${encodeURIComponent(email)}`);
         }, 2000);
       } else {
         toast.error(data.message || 'Failed to send OTP. Please try again.');
-        
+
         // Fallback for mock dev test if needed
         const devResetLink = data.devResetLink;
         if (devResetLink) {
@@ -90,7 +90,7 @@ const ForgotPassword = () => {
         <Link to="/login" className="back-to-home">
           <FaArrowLeft /> Back to Login
         </Link>
-        
+
         <div className="auth-header">
           <h1>WalletWise</h1>
           <p className="subtitle">Enter your email to receive a password reset OTP.</p>

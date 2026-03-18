@@ -110,10 +110,8 @@
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  background: conic-gradient(
-    var(--brand-primary) calc(var(--progress) * 1%),
-    rgba(99, 102, 241, 0.1) 0
-  );
+  background: conic-gradient(var(--brand-primary) calc(var(--progress) * 1%),
+      rgba(99, 102, 241, 0.1) 0);
   display: grid;
   place-items: center;
 }
@@ -293,6 +291,7 @@
   padding: 1.5rem 0 0;
   border-top: 1px dashed var(--border-subtle);
 }
+
 .ring-visual div {
   width: 80px;
   height: 80px;
@@ -395,7 +394,7 @@
   min-width: 0;
 }
 
-.category-stats > div {
+.category-stats>div {
   min-width: 0;
 }
 
@@ -691,6 +690,7 @@
 }
 
 @media (max-width: 640px) {
+
   .budget-header,
   .overview-grid,
   .category-grid,
