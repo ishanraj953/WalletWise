@@ -111,6 +111,10 @@ body.theme-dark .ww-header.scrolled {
   gap: 12px;
   cursor: pointer;
 }
+.ww-pill{
+  display: inline-flex;
+  gap: 4px;
+}
 .ww-logo-icon {
   width: 36px;
   height: 36px;
@@ -165,9 +169,14 @@ body.theme-dark .ww-header.scrolled {
 .ww-btn-link {
   background: none;
   border: none;
+  display: inline-flex;
+  gap: 2px;
   font-weight: 600;
   cursor: pointer;
   color: var(--text-main);
+}
+.ww-arrow{
+  margin-top: 4px;
 }
 .ww-btn-primary {
   background: var(--color-primary);
@@ -198,6 +207,7 @@ body.theme-dark .ww-header.scrolled {
   padding: 80px 0 120px;
   position: relative;
   overflow: visible;
+  margin-top: 10vh;
 }
 .ww-hero-ref-grid {
   display: grid;
