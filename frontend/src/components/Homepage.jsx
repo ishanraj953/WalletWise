@@ -110,7 +110,7 @@ const Homepage = () => {
             >
               <motion.div className="ww-pill" variants={animation.fadeUp}>
                 <Sparkles size={14} className="ww-pill-icon" />
-                <span>Smart finance for students</span>
+                <span> Smart finance for students</span>
               </motion.div>
 
               <motion.h1
@@ -139,7 +139,7 @@ const Homepage = () => {
                   Get Started
                 </button>
                 <a href="#features" className="ww-btn-link ww-btn-lg">
-                  Explore Features <ChevronRight size={16} />
+                  Explore Features <ChevronRight size={20} className="ww-arrow"/>
                 </a>
               </motion.div>
 
