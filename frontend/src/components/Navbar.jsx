@@ -87,7 +87,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen, navigate }) => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-slate-900 px-4 py-4 space-y-4 -mt-4">
+        <div className="md:hidden bg-white dark:bg-slate-900 px-4 py-4 space-y-4 -mt-4 w-full">
           <a
             href="#home"
             onClick={() => setIsMenuOpen(false)}
