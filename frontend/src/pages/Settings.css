@@ -346,6 +346,7 @@ body.theme-dark .form-group input:-webkit-autofill:active {
 }
 
 @media (max-width: 768px) {
+  
   .footer-content {
     flex-direction: column;
     gap: 1rem;

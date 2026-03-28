@@ -386,6 +386,7 @@
 }
 
 @media (max-width: 960px) {
+  
   .goals-header {
     flex-direction: column;
   }

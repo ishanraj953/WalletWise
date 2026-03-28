@@ -619,6 +619,7 @@ body.theme-dark .boost-box,
 }
 
 @media (max-width: 768px) {
+  
   .stats-hero {
     flex-direction: column;
     padding: 2rem 1rem;

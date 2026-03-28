@@ -687,6 +687,7 @@ body.theme-dark,
 }
 
 @media (max-width: 980px) {
+
   .ai-hero {
     grid-template-columns: 1fr;
   }
@@ -697,6 +698,7 @@ body.theme-dark,
 }
 
 @media (max-width: 720px) {
+
   .ai-header {
     padding-top: 2rem;
   }

@@ -251,6 +251,7 @@
 }
 
 @media (max-width: 768px) {
+  
   .simulator-grid {
     grid-template-columns: 1fr;
   }

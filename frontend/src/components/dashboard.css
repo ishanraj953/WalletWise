@@ -1154,12 +1154,14 @@
    10. RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 1200px) {
+
   .charts-section {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 1024px) {
+
   .dashboard-header-area {
     flex-direction: column;
     gap: 1.5rem;
@@ -1171,6 +1173,7 @@
 }
 
 @media (max-width: 768px) {
+
   .dashboard-header {
     padding: 1rem;
   }
@@ -1225,6 +1228,7 @@
 }
 
 @media (max-width: 640px) {
+
   .dashboard-content {
     width: 95%;
     padding: 1rem 0;
@@ -1271,6 +1275,7 @@
 }
 
 @media (max-width: 480px) {
+
   .quick-actions-grid {
     grid-template-columns: 1fr;
   }

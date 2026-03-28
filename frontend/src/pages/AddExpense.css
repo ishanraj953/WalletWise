@@ -440,6 +440,7 @@
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 480px) {
+
   .form-row-flex {
     flex-direction: column;
     gap: 0;

@@ -6,7 +6,6 @@
   --wallet-text: var(--text-main, #1f2937);
   --wallet-muted: var(--text-muted, #6b7280);
   --wallet-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
-
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -397,6 +396,7 @@ body.theme-dark .wallet-details-container,
 }
 
 @media (max-width: 768px) {
+  
   .create-btn {
     width: fit-content;
     min-width: 0;
