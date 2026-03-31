@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../api/client';
 import './MoodInsight.css';
 
@@ -60,9 +59,7 @@ const MoodInsight = () => {
 
   return (
     <div className="mood-insight-page">
-      <Link to="/dashboard" className="back-link">← Back to Dashboard</Link>
-
-      <h1>🧠 Mood-Spending Correlation</h1>
+    <h1>🧠 Mood-Spending Correlation</h1>
       <p className="subtitle">How your emotions influence your wallet — last 30 days</p>
 
       <div className="mood-grid">
