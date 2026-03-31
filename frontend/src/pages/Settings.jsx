@@ -181,6 +181,7 @@ const Settings = () => {
             <div className="status-icon">
               {status.type === 'success' ? <FaCheck /> : <FaExclamationTriangle />}
             </div>
+
             <p>{status.message}</p>
             <button onClick={() => setStatus({ type: '', message: '' })} className="close-status">
               <FaTimes />
@@ -195,6 +196,7 @@ const Settings = () => {
               <div className="card-icon blue">
                 <FaWallet />
               </div>
+
               <div>
                 <h2>Income Information</h2>
                 <p>Help us understand your income patterns</p>
@@ -207,6 +209,7 @@ const Settings = () => {
                 <label htmlFor="incomeFrequency">
                   Income Frequency <span className="required">*</span>
                 </label>
+
                 <p className="field-info">{fieldInfo.incomeFrequency}</p>
                 <div className="select-wrapper">
                   <select
@@ -245,6 +248,7 @@ const Settings = () => {
               <div className="card-icon purple">
                 <FaBullseye />
               </div>
+
               <div>
                 <h2>Financial Goals & Preferences</h2>
                 <p>Define your financial priorities and risk appetite</p>
@@ -257,6 +261,7 @@ const Settings = () => {
                 <label htmlFor="priorities">
                   Financial Priorities <span className="required">*</span>
                 </label>
+
                 <p className="field-info">{fieldInfo.priorities}</p>
                 <div className="select-wrapper">
                   <select
@@ -278,6 +283,7 @@ const Settings = () => {
                 <label htmlFor="riskTolerance">
                   Risk Tolerance <span className="required">*</span>
                 </label>
+
                 <p className="field-info">{fieldInfo.riskTolerance}</p>
                 <div className="select-wrapper">
                   <select
@@ -298,6 +304,7 @@ const Settings = () => {
                 <label htmlFor="theme">
                   Theme Preference <span className="required">*</span>
                 </label>
+
                 <p className="field-info">{fieldInfo.theme}</p>
                 <div className="select-wrapper">
                   <select
@@ -320,15 +327,18 @@ const Settings = () => {
             <div className="card-icon danger">
               <FaTrash />
             </div>
+
             <div>
               <h2>Danger Zone</h2>
               <p>Permanently delete your account and all associated WalletWise data.</p>
             </div>
           </div>
+
           <p className="danger-note">
             This action cannot be undone. Your transactions, budgets, savings goals, subscriptions, investments,
             shared-wallet ownership data, and account profile will be permanently removed.
           </p>
+
           <button
             type="button"
             className="btn-danger"
@@ -361,6 +371,7 @@ const Settings = () => {
               >
                 Cancel
               </button>
+              
               <button
                 type="submit"
                 onClick={handleSave}
@@ -388,6 +399,7 @@ const Settings = () => {
             <p>
               Type <strong>DELETE</strong> to confirm. This will erase your account and all associated data permanently.
             </p>
+
             <input
               type="text"
               value={deleteConfirmationText}
@@ -396,6 +408,7 @@ const Settings = () => {
               className="delete-input"
               autoFocus
             />
+
             <div className="delete-modal-actions">
               <button
                 type="button"
@@ -405,6 +418,7 @@ const Settings = () => {
               >
                 Cancel
               </button>
+              
               <button
                 type="button"
                 className="btn-danger"

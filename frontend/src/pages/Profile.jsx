@@ -171,6 +171,7 @@ const Profile = () => {
                         <div className="status-icon">
                             {status.type === 'success' ? <FaCheck /> : <FaExclamationTriangle />}
                         </div>
+
                         <p>{status.message}</p>
                         <button onClick={() => setStatus({ type: '', message: '' })} className="close-status">
                             <FaTimes />
@@ -184,6 +185,7 @@ const Profile = () => {
                             <div className="card-icon blue">
                                 <FaUserCircle />
                             </div>
+
                             <div>
                                 <h2>Profile Details</h2>
                                 <p>Update your photo and personal details here.</p>
@@ -216,6 +218,7 @@ const Profile = () => {
                                         userInitials
                                     )}
                                 </div>
+                                
                                 <div>
                                     <input
                                         type="file"
@@ -224,6 +227,7 @@ const Profile = () => {
                                         onChange={handleFileChange}
                                         style={{ display: 'none' }}
                                     />
+
                                     <button
                                         className="btn-secondary"
                                         onClick={handleAvatarClick}
@@ -233,6 +237,7 @@ const Profile = () => {
                                         <FaCamera style={{ marginRight: '0.5rem' }} />
                                         Change Avatar
                                     </button>
+
                                     <p className="field-info" style={{ marginTop: '0.5rem' }}>
                                         JPG, GIF or PNG. 1MB max.
                                     </p>
@@ -245,10 +250,12 @@ const Profile = () => {
                                 <label>Name</label>
                                 <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} />
                             </div>
+
                             <div className="form-group">
                                 <label>Email</label>
                                 <input type="email" name="email" value={formData.email} disabled style={{ opacity: 0.7, cursor: 'not-allowed' }} />
                             </div>
+
                             <div className="form-group">
                                 <label>Phone</label>
                                 <input
@@ -258,6 +265,7 @@ const Profile = () => {
                                     onChange={handleChange}
                                 />
                             </div>
+
                             <div className="form-group">
                                 <label>Department</label>
                                 <input
@@ -267,6 +275,7 @@ const Profile = () => {
                                     onChange={handleChange}
                                 />
                             </div>
+                            
                             <div className="form-group">
                                 <label>Year</label>
                                 <div className="select-wrapper">
@@ -279,6 +288,7 @@ const Profile = () => {
                                     </select>
                                 </div>
                             </div>
+
                             <div className="form-group">
                                 <label>Currency</label>
                                 <div className="select-wrapper">
@@ -290,6 +300,7 @@ const Profile = () => {
                                     </select>
                                 </div>
                             </div>
+
                             <div className="form-group">
                                 <label>Date Format</label>
                                 <div className="select-wrapper">
@@ -300,6 +311,7 @@ const Profile = () => {
                                     </select>
                                 </div>
                             </div>
+
                             <div className="form-group">
                                 <label>Language</label>
                                 <div className="select-wrapper">
@@ -319,17 +331,20 @@ const Profile = () => {
                             <div className="card-icon blue" style={{ background: 'linear-gradient(135deg, #fee2e2, #fecaca)', color: '#ef4444' }}>
                                 <FaBell />
                             </div>
+
                             <div>
                                 <h2>Notifications</h2>
                                 <p>Customize how and when you receive alerts.</p>
                             </div>
                         </div>
+
                         <div className="form-grid">
                             <div className="form-group" style={{ gridColumn: '1 / -1', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <div>
                                     <label style={{ marginBottom: 0 }}>Bill Reminders</label>
                                     <p className="field-info" style={{ marginTop: '0.2rem' }}>Receive email alerts for upcoming due dates</p>
                                 </div>
+
                                 <label className="toggle-switch">
                                     <input
                                         type="checkbox"
@@ -345,6 +360,7 @@ const Profile = () => {
                                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
                                     <label>Reminder Timing</label>
                                     <p className="field-info" style={{ marginBottom: '0.5rem' }}>How many days before the due date should we remind you?</p>
+                                    
                                     <div className="radio-group" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                                         {[1, 3, 7].map(days => (
                                             <label key={days} className="radio-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', background: 'var(--bg-app)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)', border: `1px solid ${Number(formData.reminderDaysBefore) === days ? '#ef4444' : 'var(--border-subtle)'}` }}>
@@ -356,6 +372,7 @@ const Profile = () => {
                                                     onChange={handleChange}
                                                     style={{ display: 'none' }}
                                                 />
+
                                                 <div style={{
                                                     width: '18px', height: '18px', borderRadius: '50%', border: '2px solid',
                                                     borderColor: Number(formData.reminderDaysBefore) === days ? '#ef4444' : 'var(--border-subtle)',
@@ -364,6 +381,7 @@ const Profile = () => {
                                                 }}>
                                                     {Number(formData.reminderDaysBefore) === days && <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'white' }} />}
                                                 </div>
+
                                                 <span style={{ fontWeight: Number(formData.reminderDaysBefore) === days ? 600 : 400 }}>
                                                     {days} Day{days !== 1 && 's'} Before
                                                 </span>
@@ -398,6 +416,7 @@ const Profile = () => {
                             >
                                 Cancel
                             </button>
+                            
                             <button
                                 className="btn-primary"
                                 type="button" /* Changed to type button for safety, but wrapping form submit needs trigger */

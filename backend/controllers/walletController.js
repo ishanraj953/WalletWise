@@ -65,7 +65,7 @@ exports.getWalletById = async (req, res) => {
 exports.updateWallet = async (req, res) => {
   try {
     const { name, description } = req.body;
-    
+
     // Only owner or admin can update
     const wallet = await Wallet.findOne({
       _id: req.params.id,

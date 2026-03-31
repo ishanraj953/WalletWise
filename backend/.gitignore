@@ -25,3 +25,6 @@ Thumbs.db
 # Backup files
 *.backup
 *.bak
+
+# Local debug output
+out.txt

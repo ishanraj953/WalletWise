@@ -171,7 +171,7 @@ const Dashboard = () => {
       path: "/transactions",
     },
     { id: "budget", label: "Budget", icon: FaChartPie, path: "/budget" },
-    { id: "wallets", label: "Shared Wallets", icon: FaWallet, path: "/wallets" },
+    { id: "wallets", label: "Wallets", icon: FaWallet, path: "/wallets" },
     { id: "subscriptions", label: "Subscriptions", icon: FaCog, path: "/subscriptions" },
   ];
 
@@ -241,8 +241,6 @@ const Dashboard = () => {
         //   navigate('/login');
         //   return;
         // }
-
-
 
         // Setup initial user
         setUser(authUser);
@@ -663,10 +661,10 @@ const Dashboard = () => {
               <h2 className="greeting-text">
                 Good {timeOfDay},{" "}
                 <span className="user-name">
-                  {user?.fullName || user?.name}
+                  {user?.fullName || user?.name}!
                 </span>
-                !
               </h2>
+
               <p className="current-date">
                 <FaCalendarAlt className="date-icon" />
                 {currentDate}
@@ -739,9 +737,11 @@ const Dashboard = () => {
             <div className="stat-icon blue">
               <FaWallet />
             </div>
+
             <div className="stat-content">
               <h3>Total Balance</h3>
               <p className="stat-value">{formatCurrency(stats.totalBalance)}</p>
+
               <div className="stat-trend">
                 <FaArrowUp className="trend-up" />
                 <span>
@@ -756,11 +756,13 @@ const Dashboard = () => {
             <div className="stat-icon red">
               <FaMoneyBillWave />
             </div>
+
             <div className="stat-content">
               <h3>Monthly Spending</h3>
               <p className="stat-value">
                 {formatCurrency(stats.spentThisMonth)}
               </p>
+
               <div className="progress-container">
                 <div className="progress-bar">
                   <div
@@ -770,12 +772,14 @@ const Dashboard = () => {
                     }}
                   ></div>
                 </div>
+
                 <span className="progress-text">
                   {stats.monthlyBudget > 0
                     ? `${formatCurrency(stats.budgetLeft)} left of ${formatCurrency(stats.monthlyBudget)}`
                     : "No budget set"}
                 </span>
               </div>
+
               {stats.monthlyBudget === 0 && (
                 <button
                   onClick={() => setShowSetBudgetModal(true)}
@@ -791,12 +795,15 @@ const Dashboard = () => {
             <div className="stat-icon green">
               <FaPiggyBank />
             </div>
+
             <div className="stat-content">
               <h3>Total Savings</h3>
               <p className="stat-value">{formatCurrency(stats.savings)}</p>
+
               <div className="stat-trend">
                 <span>{savingsGoals.length} active goals</span>
               </div>
+
               {stats.savings === 0 && (
                 <button
                   onClick={() => setShowSavingsGoalModal(true)}
@@ -812,11 +819,13 @@ const Dashboard = () => {
             <div className="stat-icon purple">
               <FaChartLine />
             </div>
+
             <div className="stat-content">
               <h3>Budget Status</h3>
               <p className="stat-value">
                 {Math.round(stats.budgetUsedPercentage)}% used
               </p>
+
               <div className="progress-container">
                 <div className="progress-bar">
                   <div
@@ -826,12 +835,14 @@ const Dashboard = () => {
                     }}
                   ></div>
                 </div>
+
                 <span className="progress-text">
                   {stats.monthlyBudget > 0
                     ? `${formatCurrency(stats.monthlyBudget)} total`
                     : "No budget set"}
                 </span>
               </div>
+
               {stats.monthlyBudget === 0 && (
                 <button
                   onClick={() => setShowSetBudgetModal(true)}
@@ -917,6 +928,7 @@ const Dashboard = () => {
               <h3>Monthly Pacing & Projection</h3>
               <span className="chart-subtitle">Where you'll end up this month</span>
             </div>
+
             <div className="chart-wrapper">
               <Line data={projectionChartData} options={projectionOptions} />
             </div>
@@ -927,6 +939,7 @@ const Dashboard = () => {
               <h3>Weekly Expenses</h3>
               <span className="chart-subtitle">Last 7 days</span>
             </div>
+
             <div className="chart-wrapper">
               {weeklyExpenses.length > 0 &&
                 weeklyExpenses.some((exp) => exp.amount > 0) ? (
@@ -951,6 +964,7 @@ const Dashboard = () => {
               <h3>Spending by Category</h3>
               <span className="chart-subtitle">This month</span>
             </div>
+
             <div className="chart-wrapper">
               {categorySpending.length > 0 &&
                 categorySpending.some((cat) => cat.amount > 0) ? (
@@ -980,6 +994,7 @@ const Dashboard = () => {
                 {recentTransactions.length} transactions this month
               </p>
             </div>
+
             <button
               onClick={() => navigate("/transactions")}
               className="view-all-btn"
@@ -997,6 +1012,7 @@ const Dashboard = () => {
                       {transaction.type === "expense" ? "-" : "+"}
                     </div>
                   </div>
+
                   <div className="transaction-details">
                     <h4>
                       {transaction.isEncrypted ? (
@@ -1016,6 +1032,7 @@ const Dashboard = () => {
                         transaction.description || transaction.category || "Transaction"
                       )}
                     </h4>
+
                     <p className="transaction-category">
                       {transaction.category}
                     </p>
@@ -1058,6 +1075,7 @@ const Dashboard = () => {
               <h3>Savings Goals</h3>
               <span className="section-subtitle">Progress towards targets</span>
             </div>
+
             <div className="goals-grid">
               {savingsGoals.slice(0, 3).map((goal, index) => (
                 <div key={index} className="goal-card">
@@ -1065,6 +1083,7 @@ const Dashboard = () => {
                     <h4>{goal.name}</h4>
                     <span className="goal-category">{goal.category}</span>
                   </div>
+
                   <div className="goal-progress">
                     <div className="progress-bar">
                       <div
@@ -1074,6 +1093,7 @@ const Dashboard = () => {
                         }}
                       ></div>
                     </div>
+
                     <div className="goal-amounts">
                       <span className="current-amount">
                         {formatCurrency(goal.currentAmount)}
@@ -1082,6 +1102,7 @@ const Dashboard = () => {
                         of {formatCurrency(goal.targetAmount)}
                       </span>
                     </div>
+
                     <div className="goal-date">
                       Target:{" "}
                       {new Date(goal.targetDate).toLocaleDateString("en-IN", {

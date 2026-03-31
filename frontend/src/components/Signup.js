@@ -181,7 +181,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="auth-container split-layout">
+    <div className="auth-container">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -194,21 +194,11 @@ const Signup = () => {
         pauseOnHover
       />
 
-      <div className="auth-features">
-        <h1>Student Benefits</h1>
-        <ul>
-          <li>No-cost student plan</li>
-          <li>Smart budgeting templates</li>
-          <li>Insightful weekly summaries</li>
-          <li>Alerts for overspending</li>
-          <li>Export-ready reports</li>
-        </ul>
-      </div>
-
       <div className="auth-card">
         <Link to="/" className="back-to-home">
           <FaArrowLeft /> Back to Home
         </Link>
+
         <div className="auth-header">
           <h1>WalletWise</h1>
           <p className="subtitle">Create your student account</p>
@@ -239,6 +229,7 @@ const Signup = () => {
                 <FaIdCard className="input-icon" />
                 Student ID *
               </label>
+
               <input
                 type="text"
                 id="studentId"
@@ -256,6 +247,7 @@ const Signup = () => {
                 <FaUser className="input-icon" />
                 Full Name *
               </label>
+
               <input
                 type="text"
                 id="fullName"
@@ -274,6 +266,7 @@ const Signup = () => {
               <FaEnvelope className="input-icon" />
               Email Address *
             </label>
+
             <input
               type="email"
               id="email"
@@ -292,6 +285,7 @@ const Signup = () => {
                 <FaLock className="input-icon" />
                 Password *
               </label>
+
               <div className="password-input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -303,6 +297,7 @@ const Signup = () => {
                   required
                   disabled={loading}
                 />
+
                 <button
                   type="button"
                   className="password-toggle"
@@ -320,6 +315,7 @@ const Signup = () => {
                 <FaLock className="input-icon" />
                 Confirm Password *
               </label>
+
               <div className="password-input-wrapper">
                 <input
                   type={showConfirmPassword ? "text" : "password"}
@@ -331,6 +327,7 @@ const Signup = () => {
                   required
                   disabled={loading}
                 />
+
                 <button
                   type="button"
                   className="password-toggle"
@@ -350,6 +347,7 @@ const Signup = () => {
                 <FaPhone className="input-icon" />
                 Phone Number
               </label>
+
               <input
                 type="tel"
                 id="phoneNumber"
@@ -371,6 +369,7 @@ const Signup = () => {
                 <FaGraduationCap className="input-icon" />
                 Year *
               </label>
+
               <select
                 id="year"
                 name="year"
@@ -393,6 +392,7 @@ const Signup = () => {
               <FaUniversity className="input-icon" />
               Department *
             </label>
+
             <input
               type="text"
               id="department"

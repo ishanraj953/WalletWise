@@ -190,7 +190,6 @@ const sendPasswordResetInstructions = async (user, { skipEmail } = {}) => {
   return { otp, token, resetLink, delivered: true };
 };
 
-
 const register = asyncHandler(async (req, res) => {
   console.log('📝 Incoming Registration Request:', JSON.stringify(req.body, null, 2));
 
@@ -545,11 +544,11 @@ const updateProfile = asyncHandler(async (req, res) => {
   //   incomeFrequency, incomeSources, priorities, riskTolerance
   // } = parsed.data;
   const {
-  fullName, phoneNumber, department, year,
-  currency, dateFormat, language, theme,
-  incomeFrequency, incomeSources, priorities, riskTolerance,
-  billRemindersEnabled, reminderDaysBefore
-} = parsed.data;
+    fullName, phoneNumber, department, year,
+    currency, dateFormat, language, theme,
+    incomeFrequency, incomeSources, priorities, riskTolerance,
+    billRemindersEnabled, reminderDaysBefore
+  } = parsed.data;
 
   if (fullName !== undefined) user.fullName = fullName.trim();
   if (phoneNumber !== undefined) user.phoneNumber = phoneNumber.trim();
@@ -646,7 +645,17 @@ const googleCallback = asyncHandler(async (req, res) => {
 
   setAuthCookies(res, accessToken, refreshToken);
 
-  const redirectUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/dashboard`;
+  const frontendBaseUrl = (
+    process.env.FRONTEND_URL ||
+    (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000')
+  ).replace(/\/+$/, '');
+  if (!frontendBaseUrl) {
+    return res.status(500).json({
+      success: false,
+      message: 'Google OAuth callback misconfigured: FRONTEND_URL is required in production.'
+    });
+  }
+  const redirectUrl = `${frontendBaseUrl}/dashboard?access_token=${encodeURIComponent(accessToken)}`;
   return res.redirect(redirectUrl);
 });
 

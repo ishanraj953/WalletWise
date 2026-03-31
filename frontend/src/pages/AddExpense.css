@@ -17,7 +17,7 @@
   background: var(--bg-card, #ffffff);
   border-radius: 28px;
   width: 100%;
-  max-width: 480px;
+  max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: var(--shadow-soft, 0 25px 50px -12px rgba(0, 0, 0, 0.2));
@@ -343,7 +343,8 @@
   margin-bottom: 0;
 }
 
-.vault-setup-prompt-btn, .vault-toggle-btn {
+.vault-setup-prompt-btn,
+.vault-toggle-btn {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -377,23 +378,19 @@
 }
 
 .encrypted-textarea-bg {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--bg-app, #f8fafc),
-    var(--bg-app, #f8fafc) 10px,
-    rgba(22, 163, 74, 0.03) 10px,
-    rgba(22, 163, 74, 0.03) 20px
-  ) !important;
+  background: repeating-linear-gradient(45deg,
+      var(--bg-app, #f8fafc),
+      var(--bg-app, #f8fafc) 10px,
+      rgba(22, 163, 74, 0.03) 10px,
+      rgba(22, 163, 74, 0.03) 20px) !important;
 }
 
 .dark .encrypted-textarea-bg {
-  background: repeating-linear-gradient(
-    45deg,
-    var(--bg-app, #0f172a),
-    var(--bg-app, #0f172a) 10px,
-    rgba(74, 222, 128, 0.05) 10px,
-    rgba(74, 222, 128, 0.05) 20px
-  ) !important;
+  background: repeating-linear-gradient(45deg,
+      var(--bg-app, #0f172a),
+      var(--bg-app, #0f172a) 10px,
+      rgba(74, 222, 128, 0.05) 10px,
+      rgba(74, 222, 128, 0.05) 20px) !important;
 }
 
 /* ============ ACTION BUTTONS ============ */
@@ -443,6 +440,7 @@
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 480px) {
+
   .form-row-flex {
     flex-direction: column;
     gap: 0;

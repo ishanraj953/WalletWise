@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
+const AUTH_TOKEN_KEY = 'walletwise_access_token';
+
 const rawBaseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const sanitizedBaseUrl = rawBaseUrl.replace(/\/+$/, '');
 const API_BASE_URL = sanitizedBaseUrl.endsWith('/api')
@@ -26,11 +28,25 @@ export const refreshClient = axios.create({
 
 api.interceptors.request.use((config) => {
   config.url = normalizeApiPath(config.url);
+  const token = window.localStorage.getItem(AUTH_TOKEN_KEY);
+  if (token) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`
+    };
+  }
   return config;
 });
 
 refreshClient.interceptors.request.use((config) => {
   config.url = normalizeApiPath(config.url);
+  const token = window.localStorage.getItem(AUTH_TOKEN_KEY);
+  if (token) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`
+    };
+  }
   return config;
 });
 
@@ -94,6 +110,7 @@ api.interceptors.response.use(
         // Advanced 401 handling outside component
         // 1. Silent logout to backend
         refreshClient.post('/auth/logout', {}).catch(() => { });
+        window.localStorage.removeItem(AUTH_TOKEN_KEY);
         // 2. Dispatch for isolated context cleaning if needed
         window.dispatchEvent(new Event('auth:logout'));
         // 3. Do not clear all browser storage.

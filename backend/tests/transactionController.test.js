@@ -207,7 +207,7 @@ describe('Transaction Controller', () => {
 
         it('should correctly spawn new transaction and update wallet balance for recurring transactions', async () => {
             mockdate.set('2024-01-01T10:00:00.000Z');
-            
+
             // Create a recurring transaction that is due
             const recurringTx = new Transaction({
                 userId: user._id,

@@ -74,7 +74,7 @@ const processEvent = (user, eventType) => {
 
         const now = new Date();
         const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-        
+
         let lastDate = null;
         if (user.lastTransactionDate) {
             const d = new Date(user.lastTransactionDate);
@@ -87,7 +87,7 @@ const processEvent = (user, eventType) => {
             result.streakUpdated = true;
         } else {
             const diffTime = Math.abs(today - lastDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             if (diffDays === 1) {
                 // Consecutive day

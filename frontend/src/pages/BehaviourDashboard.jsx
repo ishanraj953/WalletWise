@@ -49,6 +49,7 @@ const BehaviourDashboard = () => {
     const locale = currency === 'INR' ? 'en-IN' : 'en-US';
     return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount || 0);
   }, [user?.currency]);
+
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState(null);
   const [transactions, setTransactions] = useState([]);
@@ -342,6 +343,7 @@ const BehaviourDashboard = () => {
               Automatically tagged transactions, live health signals, and action-ready guidance — all tuned to your habits.
             </p>
           </div>
+
           <div className="ai-status-card">
             <div className="ai-status-text">
               <p className="ai-eyebrow">Quick status</p>
@@ -350,6 +352,7 @@ const BehaviourDashboard = () => {
                 AI confidence: {confidenceScore !== null ? `${confidenceScore}%` : 'N/A'}
               </p>
             </div>
+
             <div className="ai-status-icon">
               <LucideShieldAlert size={28} />
             </div>
@@ -377,6 +380,7 @@ const BehaviourDashboard = () => {
                 <p className="ai-eyebrow">Auto-tagging</p>
                 <h2>Transactions tagged by AI</h2>
               </div>
+
               <div className="ai-icon-pill ai-icon-indigo">
                 <LucideTag size={18} />
               </div>
@@ -397,11 +401,13 @@ const BehaviourDashboard = () => {
                           <p className="ai-merchant-subtitle">{tx.code} · {tx.category}</p>
                         </div>
                       </div>
+
                       <div className="ai-transaction-value">
                         <p>{formatCurrency(tx.amount)}</p>
                         <p>{tx.confidence}% confidence</p>
                       </div>
                     </div>
+
                     <div className="ai-confidence-track">
                       <div className="ai-confidence-fill" style={{ width: `${tx.confidence}%` }}></div>
                     </div>
@@ -424,6 +430,7 @@ const BehaviourDashboard = () => {
                 <LucideRadar size={18} />
               </div>
             </div>
+
             <div className="ai-stack">
               {patternHighlights.map((item, idx) => (
                 <div key={`${item}-${idx}`} className="ai-pattern-card">
@@ -434,6 +441,7 @@ const BehaviourDashboard = () => {
                   </div>
                 </div>
               ))}
+
               <div className="ai-highlight-card">
                 <p>Merchant recognition enabled — bank codes are replaced with trusted names.</p>
                 <div className="ai-highlight-meta">
@@ -461,6 +469,7 @@ const BehaviourDashboard = () => {
               <LucideLightbulb size={18} />
             </div>
           </div>
+
           <div className="ai-stack">
             {insightMessages.length === 0 ? (
               <div className="ai-pattern-card">No insights yet. Add more transactions to unlock analysis.</div>
@@ -490,6 +499,7 @@ const BehaviourDashboard = () => {
               <LucideGauge size={18} />
             </div>
           </div>
+
           <div className="ai-metric-grid">
             {vitalSigns.map((item) => (
               <div key={item.id} className="ai-metric-card">
@@ -506,17 +516,20 @@ const BehaviourDashboard = () => {
               </div>
             ))}
           </div>
+
           <div className="ai-subgrid">
             <div className="ai-snapshot-card">
               <div className="ai-snapshot-top">
                 <p>Right now snapshot</p>
                 <span>Available vs committed</span>
               </div>
+
               <div className="ai-snapshot-bar">
                 <div className="ai-snapshot-labels">
                   <span>Available {formatCurrency(availableNow)}</span>
                   <span>Committed {formatCurrency(totalMonthlyContribution)}</span>
                 </div>
+
                 <div className="ai-progress">
                   <div
                     className="ai-progress-fill"
@@ -529,6 +542,7 @@ const BehaviourDashboard = () => {
                 </div>
               </div>
             </div>
+
             <div className={`ai-status-pill ${pulseTone}`}>
               <p className="ai-eyebrow">Quick status</p>
               <h3>{pulseStatus}</h3>
@@ -558,12 +572,14 @@ const BehaviourDashboard = () => {
                 <LucideTrendingUp size={18} />
               </div>
             </div>
+
             <div className="ai-forecast">
               <div className="ai-forecast-labels">
                 <span>Now</span>
                 <span>Day {Math.min(15, daysInMonth)}</span>
                 <span>Day {daysInMonth}</span>
               </div>
+
               <div className="ai-forecast-bar">
                 <div
                   className="ai-forecast-fill"
@@ -574,6 +590,7 @@ const BehaviourDashboard = () => {
                   }}
                 ></div>
               </div>
+
               <div className="ai-scenarios">
                 {scenarios.map((item) => (
                   <div key={item.id} className={`ai-scenario-card ${item.tone}`}>
@@ -591,6 +608,7 @@ const BehaviourDashboard = () => {
                 <LucideShieldAlert size={18} />
                 <p>Early warning system</p>
               </div>
+
               <p>
                 {stats.monthlyBudget
                   ? overspend > 0
@@ -599,11 +617,13 @@ const BehaviourDashboard = () => {
                   : 'Set a monthly budget to unlock alerts.'}
               </p>
             </div>
+
             <div className="ai-alert-card ai-alert-success">
               <div className="ai-alert-title">
                 <LucideLightbulb size={18} />
                 <p>Opportunity spots</p>
               </div>
+
               <div className="ai-opportunity-list">
                 {opportunityItems.length === 0 ? (
                   <div className="ai-opportunity-item">
@@ -639,15 +659,18 @@ const BehaviourDashboard = () => {
               <LucideSparkles size={18} />
             </div>
           </div>
+
           <div className="ai-grid ai-grid-two">
             <div className="ai-priority-card">
               <p className="ai-eyebrow">Priority action</p>
               <h3>{priorityAction ? priorityAction.title : 'Add goals to unlock priority actions'}</h3>
               <p>{priorityAction ? priorityAction.detail : 'Create savings goals or budgets to receive tailored actions.'}</p>
+
               <div className="ai-impact-preview">
                 <span>Impact preview</span>
                 <span className="impact-strong">{priorityAction ? priorityAction.impact : 'N/A'}</span>
               </div>
+
               <button className="ai-primary-btn" type="button">
                 {priorityAction ? 'Set action reminder' : 'Create a budget'}
               </button>
@@ -659,6 +682,7 @@ const BehaviourDashboard = () => {
                   <p>One-tap solutions</p>
                   <LucideCompass size={16} className="ai-muted-icon" />
                 </div>
+
                 <div className="ai-stack">
                   <button className="ai-action-btn" type="button">
                     Review top spending categories
@@ -671,6 +695,7 @@ const BehaviourDashboard = () => {
 
               <div className="ai-card ai-card-subtle">
                 <p className="ai-card-title">Progress trackers</p>
+
                 <div className="ai-stack">
                   {progressTrackers.length === 0 ? (
                     <div className="ai-progress-item">

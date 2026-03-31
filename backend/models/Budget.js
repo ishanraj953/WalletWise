@@ -7,11 +7,13 @@ const budgetSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+
   totalBudget: {
     type: Number,
     required: [true, 'Total budget amount is required'],
     min: [1, 'Budget amount must be greater than 0']
   },
+
   categories: [{
     name: {
       type: String,
@@ -39,11 +41,13 @@ const budgetSchema = new mongoose.Schema({
       default: '#667eea'
     }
   }],
+
   month: {
     type: String,
     required: true,
     match: [/^\d{4}-\d{2}$/, 'Month must be in YYYY-MM format']
   },
+  
   isActive: {
     type: Boolean,
     default: true
@@ -56,7 +60,7 @@ const budgetSchema = new mongoose.Schema({
 budgetSchema.index({ userId: 1, month: 1 }, { unique: true });
 
 // Method to get formatted budget
-budgetSchema.methods.toJSON = function() {
+budgetSchema.methods.toJSON = function () {
   const budget = this.toObject();
   budget.id = budget._id;
   delete budget._id;
@@ -65,40 +69,40 @@ budgetSchema.methods.toJSON = function() {
 };
 
 // Static method to get current month budget
-budgetSchema.statics.getCurrentBudget = async function(userId) {
+budgetSchema.statics.getCurrentBudget = async function (userId) {
   const currentMonth = new Date().toISOString().slice(0, 7);
   return await this.findOne({ userId, month: currentMonth, isActive: true });
 };
 
 // Static method to copy previous month's budget
-budgetSchema.statics.copyPreviousMonth = async function(userId) {
+budgetSchema.statics.copyPreviousMonth = async function (userId) {
   const currentDate = new Date();
   const previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
     .toISOString().slice(0, 7);
-  
-  const previousBudget = await this.findOne({ 
-    userId, 
+
+  const previousBudget = await this.findOne({
+    userId,
     month: previousMonth,
-    isActive: true 
+    isActive: true
   });
-  
+
   if (!previousBudget) {
     return null;
   }
-  
+
   const currentMonth = currentDate.toISOString().slice(0, 7);
-  
+
   // Check if current month budget already exists
-  const existingBudget = await this.findOne({ 
-    userId, 
+  const existingBudget = await this.findOne({
+    userId,
     month: currentMonth,
-    isActive: true 
+    isActive: true
   });
-  
+
   if (existingBudget) {
     throw new Error('Budget for current month already exists');
   }
-  
+
   // Create new budget for current month
   const newBudget = new this({
     userId: previousBudget.userId,
@@ -113,7 +117,7 @@ budgetSchema.statics.copyPreviousMonth = async function(userId) {
     month: currentMonth,
     isActive: true
   });
-  
+
   return await newBudget.save();
 };
 

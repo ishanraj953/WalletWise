@@ -273,6 +273,7 @@ const Budget = () => {
           <h1>Keep it simple, stay on track</h1>
           <p>See your pace, visualize your categories, and set a monthly budget in minutes.</p>
         </div>
+
         <div className="header-actions">
           <button
             className="advanced-toggle"
@@ -289,6 +290,7 @@ const Budget = () => {
         <div className="overview-card">
           <h3>Monthly Overview</h3>
           <p>{totals.percentUsed}% used of {formatCurrency(totals.totalBudget)}</p>
+
           <div className="progress-bar">
             <div
               className={`progress-fill ${getStatus(totals.percentUsed)}`}
@@ -297,12 +299,14 @@ const Budget = () => {
           </div>
           <span className="hint">{formatCurrency(totals.totalSpent)} spent</span>
         </div>
+
         <div className="overview-card">
           <h3>Spending Pace</h3>
           <strong>{formatCurrency(totals.dailyRate)} / day</strong>
           <p>Recommended {formatCurrency(totals.recommendedDaily)} / day</p>
           <span className="hint">{daysRemaining} days left</span>
         </div>
+
         <div className="overview-card">
           <h3>Projected Outcome</h3>
           <strong className={totals.projection > 0 ? 'danger' : 'safe'}>
@@ -320,6 +324,7 @@ const Budget = () => {
             <h2>Forecast Insights</h2>
             <p>AI-driven projections based on your current spending velocity.</p>
           </div>
+
           <div className="alerts-grid">
             {forecastData.filter(f => f.currentMonth.warning).map((f, i) => (
               <div key={i} className="forecast-alert-card warning">
@@ -339,6 +344,7 @@ const Budget = () => {
           <h2>Where your money goes</h2>
           <p>Category share of your monthly budget.</p>
         </div>
+
         <div className="pie-card">
           {categories.length === 0 ? (
             <div className="pie-empty">
@@ -350,6 +356,7 @@ const Budget = () => {
               <div className="pie-chart">
                 <Pie data={pieChartData} options={pieChartOptions} />
               </div>
+
               <div className="pie-legend">
                 {categories.map((category) => {
                   const percentage = totals.totalBudget > 0
@@ -378,6 +385,7 @@ const Budget = () => {
         >
           + Set Monthly Budget
         </button>
+
         {showWizard && (
           <div className="wizard-card">
             <div className="wizard-steps">
@@ -387,12 +395,14 @@ const Budget = () => {
               >
                 1. Budget
               </button>
+
               <button
                 className={wizardStep === 2 ? 'active' : ''}
                 onClick={() => setWizardStep(2)}
               >
                 2. Style
               </button>
+
               <button
                 className={wizardStep === 3 ? 'active' : ''}
                 onClick={() => setWizardStep(3)}
@@ -412,6 +422,7 @@ const Budget = () => {
                     onChange={(e) => setWizardBudget(Number(e.target.value))}
                   />
                 </label>
+
                 <button className="wizard-next" onClick={() => setWizardStep(2)}>
                   Next →
                 </button>
@@ -436,6 +447,7 @@ const Budget = () => {
                     </button>
                   ))}
                 </div>
+
                 <button className="wizard-next" onClick={() => setWizardStep(3)}>
                   Next →
                 </button>
@@ -447,6 +459,7 @@ const Budget = () => {
                 <h3>Quick review</h3>
                 <p>Budget: {formatCurrency(wizardBudget)}</p>
                 <p>Style: {wizardPreset}</p>
+
                 <div className="wizard-actions">
                   <Link to="/dashboard" className="btn-secondary">
                     Open full budget setup
@@ -474,6 +487,7 @@ const Budget = () => {
                 <h2>Category Breakdown</h2>
                 <p>Track every bucket with progress and quick adjustments.</p>
               </div>
+
               <div className="category-grid">
                 {categories.length === 0 ? (
                   <div className="category-card">
@@ -492,23 +506,28 @@ const Budget = () => {
                           <h3>{category.name}</h3>
                           <span className={`status-pill ${status}`}>{percentUsed}% used</span>
                         </div>
+
                         <div className="category-stats">
                           <div>
                             <span>Allocated</span>
                             <strong>{formatCurrency(category.budget)}</strong>
                           </div>
+
                           <div>
                             <span>Spent</span>
                             <strong>{formatCurrency(category.spent)}</strong>
                           </div>
+
                           <div>
                             <span>Remaining</span>
                             <strong>{formatCurrency(category.budget - category.spent)}</strong>
                           </div>
                         </div>
+
                         <div className="progress-bar">
                           <div className={`progress-fill ${status}`} style={{ width: `${Math.min(percentUsed, 100)}%` }}></div>
                         </div>
+
                         <div className="adjust-actions">
                           <button onClick={() => updateBudget(category.id, 0.9)}>-10%</button>
                           <button onClick={() => updateBudget(category.id, 1.1)}>+10%</button>
@@ -526,6 +545,7 @@ const Budget = () => {
                 <h2>Budget Creation Flow</h2>
                 <p>Select a method, allocate percentages, and visualize needs vs wants.</p>
               </div>
+
               <div className="method-grid">
                 {[
                   { id: 'copy', label: 'Copy last month' },
@@ -550,6 +570,7 @@ const Budget = () => {
                       <h3>{item.label}</h3>
                       <span>{item.value}%</span>
                     </div>
+
                     <input
                       type="range"
                       min="5"
@@ -559,6 +580,7 @@ const Budget = () => {
                     />
                   </div>
                 ))}
+
                 <div className={`allocation-total ${allocationTotal === 100 ? 'ok' : 'warn'}`}>
                   Total allocation: {allocationTotal}%
                 </div>
@@ -569,6 +591,7 @@ const Budget = () => {
                   <h3>Needs vs Wants</h3>
                   <p>Balance essentials with lifestyle spending and savings goals.</p>
                 </div>
+
                 <div className="needs-wants-bar">
                   <span style={{ width: `${needsWidth}%` }}>Needs</span>
                   <span style={{ width: `${wantsWidth}%` }}>Wants</span>
@@ -582,15 +605,18 @@ const Budget = () => {
                 <h2>Advanced Options</h2>
                 <p>Switch on extra controls for complex budget needs.</p>
               </div>
+
               <div className="options-grid">
                 <label>
                   <input type="checkbox" checked={rolloverEnabled} onChange={(e) => setRolloverEnabled(e.target.checked)} />
                   Rollover unused funds
                 </label>
+
                 <label>
                   <input type="checkbox" checked={irregularIncome} onChange={(e) => setIrregularIncome(e.target.checked)} />
                   Irregular income handling
                 </label>
+
                 <label>
                   <input type="checkbox" checked={seasonalAdjustments} onChange={(e) => setSeasonalAdjustments(e.target.checked)} />
                   Seasonal adjustments
@@ -603,19 +629,23 @@ const Budget = () => {
                 <h2>Budget Health Metrics</h2>
                 <p>Highlights to keep your plan on track.</p>
               </div>
+
               <div className="metrics-grid">
                 <div className="metric-card">
                   <h3>Overspending Alerts</h3>
                   <p>{categories.some((c) => c.spent > c.budget) ? '2 categories over budget' : 'All categories within limits'}</p>
                 </div>
+
                 <div className="metric-card">
                   <h3>Category Trends</h3>
                   <p>Dining and shopping rising over last 3 months</p>
                 </div>
+
                 <div className="metric-card">
                   <h3>Budget Burn Rate</h3>
                   <p>{totals.percentUsed}% of budget used with {Math.round((dayOfMonth / daysInMonth) * 100)}% of time passed</p>
                 </div>
+
                 <div className="metric-card">
                   <h3>Flexibility Score</h3>
                   <p>{totals.totalBudget > 0 ? Math.round(((wantsTotal + savingsTotal) / totals.totalBudget) * 100) : 0}% adjustable</p>
@@ -628,6 +658,7 @@ const Budget = () => {
                 <h2>Scenario Planning</h2>
                 <p>Test income changes and category adjustments before committing.</p>
               </div>
+
               <div className="scenario-grid">
                 <div className="scenario-card">
                   <h3>What-if Calculator</h3>
@@ -647,12 +678,14 @@ const Budget = () => {
                       )}
                     </select>
                   </label>
+
                   <label>
                     Adjust by %
                     <input type="number" value={scenarioDelta} onChange={(e) => setScenarioDelta(Number(e.target.value))} />
                   </label>
                   <p>Impact: {formatCurrency(scenarioImpact.deltaBudget)} change</p>
                 </div>
+
                 <div className="scenario-card">
                   <h3>Income Simulator</h3>
                   <label>
@@ -661,10 +694,12 @@ const Budget = () => {
                   </label>
                   <p>Remaining after budget: {formatCurrency(scenarioImpact.remainingIncome)}</p>
                 </div>
+
                 <div className="scenario-card">
                   <h3>Goal Timeline</h3>
                   <p>At current savings, emergency fund target is 6 months away.</p>
                 </div>
+
                 <div className="scenario-card">
                   <h3>Emergency Fund Coverage</h3>
                   <p>{totals.totalBudget > 0 ? Math.round((savingsTotal / (totals.totalBudget / daysInMonth))) : 0} days covered</p>

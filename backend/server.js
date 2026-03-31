@@ -20,19 +20,45 @@ const { createContainer } = require('./containerBootstrap');
 const container = createContainer();
 const isProd = process.env.NODE_ENV === 'production';
 
-const FRONTEND_URL =
-  process.env.FRONTEND_URL || (isProd ? null : 'http://localhost:3000');
+const FRONTEND_URL = (
+    process.env.FRONTEND_URL ||
+    (isProd ? null : 'http://localhost:3000')
+)?.replace(/\/+$/, '');
+
+const FRONTEND_URLS = (process.env.FRONTEND_URLS || '')
+    .split(',')
+    .map((value) => value.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+
+const allowedOrigins = Array.from(
+    new Set(
+        [FRONTEND_URL, ...FRONTEND_URLS]
+            .filter(Boolean)
+            .flatMap((origin) => {
+                const normalized = origin.replace(/\/+$/, '');
+                if (normalized.includes('://www.')) {
+                    return [normalized, normalized.replace('://www.', '://')];
+                }
+                const protocolMatch = normalized.match(/^(https?:\/\/)(.+)$/i);
+                if (protocolMatch && !protocolMatch[2].startsWith('www.')) {
+                    return [normalized, `${protocolMatch[1]}www.${protocolMatch[2]}`];
+                }
+                return [normalized];
+            })
+    )
+);
+
 const MONGODB_URI =
-  process.env.MONGODB_URI || (isProd ? null : 'mongodb://localhost:27017/walletwise');
+    process.env.MONGODB_URI || (isProd ? null : 'mongodb://localhost:27017/walletwise');
 
 if (isProd && !FRONTEND_URL) {
-  console.error('❌ Missing FRONTEND_URL in production environment');
-  process.exit(1);
+    console.error('❌ Missing FRONTEND_URL in production environment');
+    process.exit(1);
 }
 
 if (isProd && !MONGODB_URI) {
-  console.error('❌ Missing MONGODB_URI in production environment');
-  process.exit(1);
+    console.error('❌ Missing MONGODB_URI in production environment');
+    process.exit(1);
 }
 
 // Initialize Express app
@@ -77,7 +103,14 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // CORS Configuration
 app.use(cors({
-    origin: FRONTEND_URL,
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        const normalizedOrigin = origin.replace(/\/+$/, '');
+        if (allowedOrigins.includes(normalizedOrigin)) {
+            return callback(null, true);
+        }
+        return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -145,7 +178,6 @@ app.use(globalLimiter);
 app.use('/api/v1/auth', authLimiter);
 app.use('/api/auth', authLimiter);
 
-
 // ==================== DATABASE CONNECTION ====================
 console.log(`🔗 Connecting to MongoDB: ${MONGODB_URI}`);
 
@@ -190,6 +222,7 @@ app.get('/api/health', (req, res) => {
         status: 'healthy',
         timestamp: new Date().toISOString(),
         database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+
         endpoints: {
             auth: {
                 register: 'POST /api/auth/register',
@@ -236,6 +269,7 @@ app.get('/', (req, res) => {
         message: 'WalletWise Backend API is running',
         version: '1.0.0',
         database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+
         endpoints: {
             auth: {
                 register: 'POST /api/auth/register',
@@ -285,14 +319,11 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 app.use(errHandler);
 
-
 // ==================== START SERVER ====================
 // Initialize Scheduler
 if (process.env.NODE_ENV !== 'test') {
-
     // const { initScheduler } = require('./utils/scheduler');
     // initScheduler();
-
 }
 
 const PORT = process.env.PORT || 5000;

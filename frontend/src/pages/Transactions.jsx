@@ -267,6 +267,7 @@ const Transactions = () => {
           <h1>Stay on top of your spending</h1>
           <p>A calm snapshot of your money moments this semester.</p>
         </div>
+
         <div className="header-actions">
           <button
             className={`advanced-toggle ${showAdvanced ? 'active' : ''}`}
@@ -289,6 +290,7 @@ const Transactions = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+
         <div className="quick-filters">
           {quickFilters.map((filter) => (
             <button
@@ -313,6 +315,7 @@ const Transactions = () => {
                 <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
               </div>
             </div>
+
             <div className="advanced-block">
               <label>Tags (backend support pending)</label>
               <input
@@ -323,6 +326,7 @@ const Transactions = () => {
                 disabled // Disabled for now as per backend availability
               />
             </div>
+
             <div className="advanced-block">
               <label>Sort</label>
               <select value={sortMode} onChange={(e) => setSortMode(e.target.value)}>
@@ -332,12 +336,14 @@ const Transactions = () => {
                 <option value="amount-low">Amount low ? high</option>
               </select>
             </div>
+
             <div className="advanced-block">
               <label>Export (Current Page)</label>
               <div className="export-actions">
                 <button onClick={() => handleExport('csv')} className="primary-button">
                   Export CSV
                 </button>
+
                 <button onClick={() => handleExport('excel')} className="ghost-button">
                   Export Excel
                 </button>
@@ -371,6 +377,7 @@ const Transactions = () => {
                   <th>Actions</th>
                 </tr>
               </thead>
+              
               <tbody>
                 {transactions.map((tx) => {
                   const moodKey = normalizeMood(tx.mood);
@@ -411,7 +418,7 @@ const Transactions = () => {
                       </td>
                       <td>
                         {tx.isRecurring && (
-                          <button 
+                          <button
                             className="ghost-button skip-button"
                             onClick={() => handleSkip(tx._id || tx.id)}
                             title="Skip Next Occurrence"

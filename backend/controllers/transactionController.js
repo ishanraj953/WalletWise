@@ -39,7 +39,6 @@ const transactionSchema = z.object({
   encryptedData: z.string().nullable().optional()
 });
 
-
 // ================= ADD TRANSACTION =================
 const addTransaction = catchAsync(async (req, res, next) => {
   const userId = req.userId;
@@ -102,6 +101,7 @@ const addTransaction = catchAsync(async (req, res, next) => {
       else if (recurringInterval === "monthly") now.setMonth(now.getMonth() + 1);
       nextExecutionDate = now;
     }
+
     const transaction = new Transaction({
       userId,
       type,
@@ -124,7 +124,7 @@ const addTransaction = catchAsync(async (req, res, next) => {
 
     // Update balance
     const balanceChange = type === 'income' ? amount : -amount;
-    
+
     if (walletId) {
       // Update shared wallet balance
       const Wallet = require('../models/Wallet');
@@ -152,11 +152,11 @@ const addTransaction = catchAsync(async (req, res, next) => {
     // Gamification Hook
     const gamificationResult = await gamification.recordUserActivity(userId);
     let badgeAwarded = null;
-    
+
     // Check for "First Transaction" badge
     const count = await Transaction.countDocuments({ userId });
     if (count === 1) {
-       badgeAwarded = await gamification.awardBadge(userId, 'FIRST_TRANSACTION');
+      badgeAwarded = await gamification.awardBadge(userId, 'FIRST_TRANSACTION');
     }
 
     return { transaction, gamificationResult, badgeAwarded };
@@ -172,7 +172,6 @@ const addTransaction = catchAsync(async (req, res, next) => {
     }
   });
 });
-
 
 // ================= GET ALL TRANSACTIONS =================
 const getAllTransactions = catchAsync(async (req, res) => {
@@ -293,7 +292,6 @@ const getAllTransactions = catchAsync(async (req, res) => {
   });
 });
 
-
 // ================= UPDATE =================
 const updateTransaction = catchAsync(async (req, res) => {
   const { id } = req.params;
@@ -333,7 +331,6 @@ const updateTransaction = catchAsync(async (req, res) => {
     transaction: oldTransaction
   });
 });
-
 
 // ================= DELETE =================
 const deleteTransaction = catchAsync(async (req, res) => {
@@ -378,7 +375,6 @@ const deleteTransaction = catchAsync(async (req, res) => {
     deletedTransaction: transaction
   });
 });
-
 
 // ================= SKIP OCCURRENCE =================
 const skipNextOccurrence = catchAsync(async (req, res) => {
@@ -457,7 +453,6 @@ const undoTransaction = catchAsync(async (req, res) => {
     transaction: restored
   });
 });
-
 
 // ================= GET ACTIVITY =================
 const getTransactionActivity = catchAsync(async (req, res) => {

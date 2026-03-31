@@ -139,7 +139,7 @@ const Homepage = () => {
                   Get Started
                 </button>
                 <a href="#features" className="ww-btn-link ww-btn-lg">
-                  Explore Features <ChevronRight size={20} className="ww-arrow"/>
+                  Explore Features <ChevronRight size={20} className="ww-arrow" />
                 </a>
               </motion.div>
 
@@ -368,7 +368,9 @@ const Homepage = () => {
                       This Week <span className="green-text">75% +</span>
                     </span>
                   </div>
+
                   <div className="ww-graph-amount">$954</div>
+
                   <div className="ww-mini-wave">
                     <svg viewBox="0 0 100 30" fill="none">
                       <path
@@ -412,10 +414,12 @@ const Homepage = () => {
             <div className="ww-content-left">
               <p className="ww-kicker">Why students struggle</p>
               <h2>Why money feels stressful in college</h2>
+
               <p className="ww-desc">
                 Juggling bills, budgets, and savings shouldn’t be another source
                 of stress.
               </p>
+
               <ul className="ww-check-list">
                 <li>
                   <CheckCircle2 size={20} className="check-icon" />
@@ -424,6 +428,7 @@ const Homepage = () => {
                     across banks, apps, and loans.
                   </span>
                 </li>
+
                 <li>
                   <CheckCircle2 size={20} className="check-icon" />
                   <span>
@@ -431,6 +436,7 @@ const Homepage = () => {
                     built for irregular student income.
                   </span>
                 </li>
+
                 <li>
                   <CheckCircle2 size={20} className="check-icon" />
                   <span>
@@ -506,6 +512,7 @@ const Homepage = () => {
                   </div>
                   <span>Tuition</span>
                 </motion.div>
+
                 <motion.div
                   className="ww-conn-card card-rent"
                   animate={{ y: [5, -5, 5] }}
@@ -521,6 +528,7 @@ const Homepage = () => {
                   </div>
                   <span>Rent Split</span>
                 </motion.div>
+
                 <motion.div
                   className="ww-conn-card card-break"
                   animate={{ y: [-5, 5, -5] }}
@@ -682,9 +690,11 @@ const Homepage = () => {
         {/* Testimonials */}
         <section className="ww-section" id="testimonials">
           <div className="ww-container">
-            <div className="ww-section-header">
-              <h2>Student Voices</h2>
+            <div className="ww-section-header centered">
+              <p className="ww-kicker">Testimonials</p>
+              <h2>Real Stories. Real Impact.</h2>
             </div>
+
             <motion.div
               className="ww-testimonial-grid"
               initial="hidden"
@@ -719,11 +729,13 @@ const Homepage = () => {
                 >
                   <div className="ww-quote-mark">“</div>
                   <p className="ww-quote-text">{t.quote}</p>
+
                   <div className="ww-user-meta">
                     <div className="ww-user-avatar-placeholder">
                       {t.name[0]}
                     </div>
-                    <div>
+
+                    <div className="quote-info">
                       <h4>{t.name}</h4>
                       <span>{t.role}</span>
                     </div>
@@ -742,6 +754,7 @@ const Homepage = () => {
               Set budgets, track spending, and hit your goals with a dashboard
               designed for real student routines.
             </p>
+
             <button
               className="ww-btn ww-btn-white"
               onClick={() => navigate("/signup")}
@@ -752,46 +765,47 @@ const Homepage = () => {
         </section>
       </main>
 
-  <footer className="ww-footer">
-  <div className="ww-container">
-    <div className="ww-footer-grid">
+      <footer className="ww-footer">
+        <div className="ww-container">
+          <div className="ww-footer-grid">
 
-      <div className="ww-footer-brand">
-        <div className="ww-brand-footer">
-          <Wallet size={20} />
-          <span>WalletWise</span>
+            <div className="ww-footer-brand">
+              <div className="ww-brand-footer">
+                <Wallet size={20} />
+                <span>WalletWise</span>
+              </div>
+
+              <p className="ww-footer-text">
+                Smart finance tracking made simple. Manage expenses, track goals,
+                and grow financially with confidence.
+              </p>
+            </div>
+
+            <div className="ww-footer-links">
+              <h4>Quick Links</h4>
+              <a href="#about">About</a>
+              <a href="#features">Features</a>
+              <a href="#testimonials">Stories</a>
+              <a href="#contact">Contact</a>
+            </div>
+
+            <div className="ww-footer-social">
+              <h4>Follow Us</h4>
+              <div className="social-icons">
+                <a href="https://github.com/SoumyaMishra-7/WalletWise"><i className="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/soumya-mishra-0828a529a/"><i className="fab fa-linkedin"></i></a>
+                <a href="2400031768@kluniversity.in"><i className="fa-solid fa-envelope"></i></a>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="ww-footer-bottom">
+            <p>Made with ❤️ in India</p>
+            <p>© 2026 WalletWise. All rights reserved.</p>
+          </div>
         </div>
-        <p className="ww-footer-text">
-          Smart finance tracking made simple. Manage expenses, track goals,
-          and grow financially with confidence.
-        </p>
-      </div>
-
-      <div className="ww-footer-links">
-        <h4>Quick Links</h4>
-        <a href="#about">About</a>
-        <a href="#features">Features</a>
-        <a href="#testimonials">Stories</a>
-        <a href="#contact">Contact</a>
-      </div>
-
-      <div className="ww-footer-social">
-        <h4>Follow Us</h4>
-        <div className="social-icons">
-          <a href="https://github.com/SoumyaMishra-7/WalletWise"><i className="fab fa-github"></i></a>
-          <a href="https://www.linkedin.com/in/soumya-mishra-0828a529a/"><i className="fab fa-linkedin"></i></a>
-          <a href="2400031768@kluniversity.in"><i className="fa-solid fa-envelope"></i></a>
-        </div>
-      </div>
-
-    </div>
-
-      <div className="ww-footer-bottom">
-        <p>Made with ❤️ in India</p>
-        <p>© 2026 WalletWise. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+      </footer>
     </div>
   );
 };
